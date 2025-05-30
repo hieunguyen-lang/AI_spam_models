@@ -57,18 +57,32 @@ class CustomDataset(Dataset):
 dataset = CustomDataset(texts, labels, tokenizer)
 
 # Huấn luyện mô hình
+# training_args = TrainingArguments(
+#     output_dir='./results',          
+#     num_train_epochs=3,              
+#     per_device_train_batch_size=8,  
+#     per_device_eval_batch_size=16,  
+#     warmup_steps=500,               
+#     weight_decay=0.01,               
+#     logging_dir='./logs',           
+#     logging_steps=10,
+#     no_cuda=True  # Tắt GPU nếu không sử dụng
+# )
 training_args = TrainingArguments(
-    output_dir='./results',          
-    num_train_epochs=3,              
-    per_device_train_batch_size=8,  
-    per_device_eval_batch_size=16,  
-    warmup_steps=500,               
-    weight_decay=0.01,               
-    logging_dir='./logs',           
-    logging_steps=10,
+    output_dir="./results",
+    evaluation_strategy="epoch",
+    learning_rate=2e-5,
+    per_device_train_batch_size=8,
+    per_device_eval_batch_size=8,
+    num_train_epochs=4,
+    weight_decay=0.01,
+    logging_steps=20,
+    logging_dir="./logs",
+    save_strategy="no",
+    load_best_model_at_end=True,
+    #fp16=True,  # nếu có GPU hỗ trợ
     no_cuda=True  # Tắt GPU nếu không sử dụng
 )
-
 trainer = Trainer(
     model=model,                         
     args=training_args,                  
