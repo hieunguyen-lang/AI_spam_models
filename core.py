@@ -70,18 +70,15 @@ dataset = CustomDataset(texts, labels, tokenizer)
 # )
 training_args = TrainingArguments(
     output_dir="./results",
-    evaluation_strategy="epoch",
-    learning_rate=2e-5,
+    num_train_epochs=4,
     per_device_train_batch_size=8,
     per_device_eval_batch_size=8,
-    num_train_epochs=4,
+    learning_rate=2e-5,
     weight_decay=0.01,
-    logging_steps=20,
     logging_dir="./logs",
-    save_strategy="no",
-    load_best_model_at_end=True,
-    #fp16=True,  # nếu có GPU hỗ trợ
-    no_cuda=True  # Tắt GPU nếu không sử dụng
+    logging_steps=10,
+    evaluation_strategy="epoch",
+    save_strategy="no",  # Không lưu giữa chừng
 )
 trainer = Trainer(
     model=model,                         
